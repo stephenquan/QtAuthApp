@@ -1,5 +1,5 @@
-import QtQuick 2.15
-import QtQuick.Window 2.15
+import QtQuick 2.12
+import QtQuick.Window 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 import QtAuthApp 1.0
@@ -97,7 +97,7 @@ Window {
     NetworkRequest {
         id: generateToken
         method: "POST"
-        url: "%1/sharing/rest/generateToken".arg(portalUrl)
+        url: "%1/portal/sharing/rest/generateToken".arg(portalUrl)
         property var formData: ( {
                                     referer: portalUrl,
                                     f: "pjson"
@@ -153,7 +153,7 @@ Window {
     NetworkRequest {
         id: relatedItems
         method: "POST"
-        url: "%1/sharing/rest/content/items/a0772f84dc744cbebb148d36eb98eb0e/relatedItems".arg(portalUrl)
+        url: "%1/portal/sharing/rest/content/items/a0772f84dc744cbebb148d36eb98eb0e/relatedItems".arg(portalUrl)
         property var formData: ( {
                                     "relationshipType": "Survey2Service",
                                     "direction": "forward",
@@ -271,7 +271,7 @@ Window {
     NetworkRequest {
         id: featureServer
         method: "POST"
-        url: "%1/rest/services/Hosted/service_30ef9090bb6b4d139e0d07a9f1b8bcdb/FeatureServer".arg(portalUrl)
+        url: "%1/server/rest/services/Hosted/service_30ef9090bb6b4d139e0d07a9f1b8bcdb/FeatureServer".arg(portalUrl)
         property var formData: ( {
                                     "token": token,
                                     "f": "pjson"
@@ -396,7 +396,7 @@ Window {
     NetworkRequest {
         id: content
         method: "POST"
-        url: "%1/sharing/rest/content/items/a0772f84dc744cbebb148d36eb98eb0e".arg(portalUrl)
+        url: "%1/portal/sharing/rest/content/items/a0772f84dc744cbebb148d36eb98eb0e".arg(portalUrl)
         property var formData: ( {
                                     "token": token,
                                     "f": "pjson"
@@ -454,11 +454,13 @@ Window {
             // }
 
             if (status === 401) {
-                // contentRetry.submit();
+                contentRetry.submit();
                 return;
             }
 
             responseData = JSON.parse(responseText);
+
+            results.log("WORKS WITHOUT RETRY");
         }
 
         function submit() {
@@ -470,7 +472,7 @@ Window {
     NetworkRequest {
         id: contentRetry
         method: "POST"
-        url: "%1/sharing/rest/content/items/a0772f84dc744cbebb148d36eb98eb0e".arg(portalUrl)
+        url: "%1/portal/sharing/rest/content/items/a0772f84dc744cbebb148d36eb98eb0e".arg(portalUrl)
         property var formData: ( {
                                     "token": token,
                                     "f": "pjson"
@@ -553,6 +555,8 @@ Window {
             // }
 
             responseData = JSON.parse(responseText);
+
+            results.log("RETRY USED");
         }
 
         function submit() {

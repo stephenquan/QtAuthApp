@@ -1,5 +1,6 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include <QNetworkProxy>
 #include "NetworkRequest.h"
 #include "Networking.h"
 #include "Settings.h"
@@ -13,6 +14,8 @@ int main(int argc, char *argv[])
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 #endif
+
+    // QNetworkProxy::setApplicationProxy(QNetworkProxy(QNetworkProxy::HttpProxy, "localhost", 8081));
 
     QGuiApplication app(argc, argv);
 
